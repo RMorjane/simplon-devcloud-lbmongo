@@ -1,0 +1,27 @@
+- name: Connecting to mongo api vm1
+  hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: yes
+  remote_user: morjane
+
+  tasks:
+
+   - name: Git Clone Repo
+     shell: git clone https://github.com/RMorjane/simplon-devcloud-lbmongo.git lbmongo
+
+   - name: Install the nodejs
+     apt:
+       name: nodejs
+       state: latest
+
+   - name: Install npm package
+     apt:
+       name: npm
+       state: latest
+
+   - name: Install required dependences
+     shell: chdir=/home/morjane/lbmongo/ npm install
+
+   - name: Start nodejs app
+     shell: npm start
